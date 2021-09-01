@@ -5,6 +5,11 @@ interface Props {
   error?: boolean;
   loading?: boolean;
   type: string;
+  // isCreating: boolean;
+  // setIsCreating: boolean;
+  // setCreateType: string;
+  // setIsEditing: boolean;
+  // setToggleContainer: string;
 }
 
 const TeamChannelList: React.FC<Props> = ({
