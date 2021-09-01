@@ -3,6 +3,7 @@ import { ChannelList, useChatContext } from 'stream-chat-react';
 import Cookies from 'universal-cookie';
 import HospitalIcon from '../assets/hospital.png';
 import LogoutIcon from '../assets/logout.png';
+import { ChannelSearch, TeamChannelList, TeamChannelPreview } from './';
 
 const Sidebar = () => (
   <div className="channel-list__sidebar">
@@ -19,10 +20,28 @@ const Sidebar = () => (
   </div>
 );
 
+const CompanyHeader = () => (
+  <div className="channel-list__header">
+    <p className="channel-list__header__text">Medical pager</p>
+  </div>
+);
+
 const ChannelContainer: React.FC = () => {
   return (
     <>
       <Sidebar />
+      <div className="channel-list__list__wrapper">
+        <CompanyHeader />
+        <ChannelSearch />
+        <ChannelList
+          filters={{}}
+          // channelRenderFilterFn={() => {}}
+          List={(listProps) => <TeamChannelList {...listProps} type="team" />}
+          Preview={(previewProps) => (
+            <TeamChannelPreview {...previewProps} type="team" />
+          )}
+        />
+      </div>
     </>
   );
 };
