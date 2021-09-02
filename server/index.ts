@@ -17,12 +17,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 
-app.get('/', (req, res) => {
+app.get('/', (req: Reuest, res: Response) => {
   res.send('Hello, World!');
 });
 
 app.post('/', (req, res) => {
-  const { message, user: sender: any , type, members } = req.body;
+  const { message, user: sender, type, members } = req.body;
 
   if (type === 'message.new') {
     members
