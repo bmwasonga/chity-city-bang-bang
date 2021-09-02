@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 
-app.get('/', (req: Reuest, res: Response) => {
+app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
@@ -26,7 +26,7 @@ app.post('/', (req, res) => {
 
   if (type === 'message.new') {
     members
-      .filter((member: any) => member.user_id !== sender.id)
+      .filter((member) => member.user_id !== sender.id)
       .forEach(({ user }) => {
         if (!user.online) {
           twilioClient.messages
