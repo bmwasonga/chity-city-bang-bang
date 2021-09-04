@@ -4,9 +4,11 @@ import axios from 'axios';
 
 import signInImage from '../assets/signup.jpg';
 
+const cookies = new Cookies();
+
 const initialState = {
   fullName: '',
-  username: '',
+  userName: '',
   password: '',
   confirmPassword: '',
   phoneNumber: '',
@@ -23,10 +25,35 @@ const Auth: React.FC = () => {
     // console.log(form);
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    console.log(form);
+    const { fullName, userName, phoneNumber, avatarURL, password } = form;
+
+    const URL = `http://localhost:5000/auth`;
+
+    const {
+      data: { token, userId, hashedPassword },
+    } = await axios.post(`${URL}/${isSignUp ? 'signup' : 'login'} `, {
+      userName,
+      password,
+      fullName,
+      phoneNumber,
+      avatarURL,
+    });
+
+    cookies.set('token', token);
+    cookies.set('userName', userName);
+    cookies.set('fullName', fullName);
+    cookies.set('userId', userId);
+
+    if (isSignUp) {
+      cookies.set('phoneNumber', phoneNumber);
+      cookies.set('avatarURL', avatarURL);
+      cookies.set('hashedPassword', hashedPassword);
+    }
+
+    window.location.reload();
   };
 
   const switchMode = () => {
@@ -54,7 +81,7 @@ const Auth: React.FC = () => {
               <label htmlFor="user name">User Name</label>
               <input
                 type="text"
-                name="username"
+                name="userName"
                 placeholder="Username"
                 onChange={handleChange}
                 required
